@@ -60,3 +60,10 @@ app.py            # the Flask application
 requirements.txt  # pinned dependencies
 README.md         # this file
 ```
+
+## Project Idea 
+Talent Lens would help talent acquisition and employer branding teams understand how their organisations appear in AI responses during a candidate’s job search. Inspired by my digital marketing background and conversations with employer branding teams, it would explore how candidates discover employers, research workplaces and compare career opportunities using AI.
+
+Users would create candidate profiles covering skills, experience, location and career goals. The application would generate realistic questions for each profile, send them to an AI platform through its API and store the responses. A dashboard would show which employers are mentioned, how they are described and which sources are cited.
+
+The first version would focus on one candidate profile, one AI platform and a small set of competitors. Users could compare results and identify gaps in their employer content. Later versions could support follow-up questions, additional platforms and recommendations for improving visibility across the entire candidate journey over time.
