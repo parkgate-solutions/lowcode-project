@@ -2,7 +2,7 @@ import os
 import re
 import secrets
 
-from flask import Flask, abort, render_template, request, session
+from flask import Flask, abort, redirect, render_template, request, session, url_for
 
 app = Flask(__name__)
 # Set FLASK_SECRET_KEY in production; the random fallback resets sessions on restart.
@@ -15,16 +15,7 @@ MAX_LENGTHS = {"name": 100, "email": 254, "message": 5000}
 
 @app.route("/")
 def index():
-    return """<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>Hello</title>
-</head>
-<body>
-  <h1>Hello from Claude</h1>
-</body>
-</html>"""
+    return redirect(url_for("contact"))
 
 
 def csrf_token():
