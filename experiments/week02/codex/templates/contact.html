@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f3ef">
+  <title>Contact us · Goodfolk</title>
+  <style>
+    :root { color-scheme: light; --ink:#22251f; --muted:#6d7167; --green:#365b45; --paper:#fffefa; --wash:#f5f3ef; --error:#a33d35; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--wash); color:var(--ink); font:16px/1.55 "Segoe UI",Arial,sans-serif; }
+    .topbar { height:76px; padding:0 max(24px,calc((100vw - 1120px)/2)); display:flex; align-items:center; justify-content:space-between; border-bottom:1px solid #e8e6df; }
+    .brand { color:var(--ink); font-family:Georgia,serif; font-size:23px; font-weight:bold; text-decoration:none; letter-spacing:-.7px; }
+    .brand span { color:var(--green); }
+    .top-note { color:var(--muted); font-size:13px; }
+    main { width:min(100% - 40px, 1060px); margin:70px auto 96px; }
+    .layout { display:grid; grid-template-columns:.9fr 1.1fr; gap:82px; align-items:start; }
+    .intro { padding-top:22px; }
+    .eyebrow { color:var(--green); font-size:12px; font-weight:700; letter-spacing:1.8px; text-transform:uppercase; }
+    h1 { max-width:450px; margin:15px 0 17px; font:normal clamp(42px,5vw,62px)/1.06 Georgia,serif; letter-spacing:-2px; }
+    .intro p { max-width:390px; color:var(--muted); font-size:17px; }
+    .aside-note { display:flex; gap:12px; align-items:center; margin-top:42px; color:var(--muted); font-size:13px; }
+    .dot { width:9px; height:9px; flex:none; border-radius:50%; background:#8ba78c; box-shadow:0 0 0 5px #e5ebe3; }
+    .form-card { padding:34px 38px 38px; background:var(--paper); border:1px solid #e9e7df; border-radius:8px; box-shadow:0 14px 40px #292a2010; }
+    .form-card h2 { margin:0 0 6px; font:normal 27px Georgia,serif; }
+    .subtext { margin:0 0 26px; color:var(--muted); font-size:14px; }
+    .field { margin:0 0 19px; }
+    label { display:block; margin-bottom:7px; font-size:14px; font-weight:650; }
+    input, textarea { display:block; width:100%; border:1px solid #d9d9d0; border-radius:4px; padding:12px 13px; background:#fff; color:var(--ink); font:inherit; outline:none; }
+    input { height:48px; }
+    textarea { min-height:142px; resize:vertical; }
+    input:focus, textarea:focus { border-color:var(--green); box-shadow:0 0 0 3px #365b451c; }
+    [aria-invalid="true"] { border-color:var(--error); }
+    .error { margin:6px 0 0; color:var(--error); font-size:13px; }
+    .error-summary { margin:0 0 20px; border-left:3px solid var(--error); padding:10px 13px; background:#fbefed; color:#762b26; font-size:14px; }
+    .submit { width:100%; min-height:49px; margin-top:4px; border:0; border-radius:4px; background:var(--green); color:white; font:600 15px "Segoe UI",Arial,sans-serif; cursor:pointer; }
+    .submit:hover { background:#294a37; }
+    .privacy { margin:14px 0 0; color:var(--muted); text-align:center; font-size:12px; }
+    footer { padding:24px; border-top:1px solid #e8e6df; color:var(--muted); text-align:center; font-size:12px; }
+    @media (max-width:720px) { .topbar { height:64px; } main { margin:38px auto 60px; } .layout { grid-template-columns:1fr; gap:30px; } .intro { padding-top:0; } h1 { font-size:46px; } .intro p { font-size:16px; } .aside-note { margin-top:22px; } .form-card { padding:27px 22px 30px; } }
+  </style>
+</head>
+<body>
+  <header class="topbar"><a class="brand" href="/contact" aria-label="Goodfolk home">goodfolk<span>.</span></a><span class="top-note">A little space to connect</span></header>
+  <main>
+    <div class="layout">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="eyebrow">We’re listening</div>
+        <h1 id="page-title">Let’s start a conversation.</h1>
+        <p>Have a question, an idea, or just want to say hello? Send us a note and we’ll be glad to hear from you.</p>
+        <div class="aside-note"><span class="dot" aria-hidden="true"></span><span>Your message is handled with care.</span></div>
+      </section>
+      <section class="form-card" aria-labelledby="form-title">
+        <h2 id="form-title">Send us a message</h2>
+        <p class="subtext">Fill in the details below and we’ll take it from there.</p>
+        {% if errors %}<div class="error-summary" role="alert">Please check the highlighted fields and try again.</div>{% endif %}
+        <form action="{{ url_for('contact') }}" method="post" novalidate>
+          <div class="field">
+            <label for="name">Your name <span aria-hidden="true">*</span></label>
+            <input id="name" name="name" type="text" autocomplete="name" placeholder="e.g. Alex Morgan" value="{{ values.name }}" required aria-invalid="{{ 'true' if errors.get('name') else 'false' }}" {% if errors.get('name') %}aria-describedby="name-error"{% endif %}>
+            {% if errors.get('name') %}<p class="error" id="name-error">{{ errors.name }}</p>{% endif %}
+          </div>
+          <div class="field">
+            <label for="email">Email address <span aria-hidden="true">*</span></label>
+            <input id="email" name="email" type="email" autocomplete="email" placeholder="you@example.com" value="{{ values.email }}" required aria-invalid="{{ 'true' if errors.get('email') else 'false' }}" {% if errors.get('email') %}aria-describedby="email-error"{% endif %}>
+            {% if errors.get('email') %}<p class="error" id="email-error">{{ errors.email }}</p>{% endif %}
+          </div>
+          <div class="field">
+            <label for="message">Message <span aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" placeholder="What’s on your mind?" required aria-invalid="{{ 'true' if errors.get('message') else 'false' }}" {% if errors.get('message') %}aria-describedby="message-error"{% endif %}>{{ values.message }}</textarea>
+            {% if errors.get('message') %}<p class="error" id="message-error">{{ errors.message }}</p>{% endif %}
+          </div>
+          <button class="submit" type="submit">Send message</button>
+          <p class="privacy">Your details are used only to respond to this message.</p>
+        </form>
+      </section>
+    </div>
+  </main>
+  <footer>Good conversations start here.</footer>
+</body>
+</html>
